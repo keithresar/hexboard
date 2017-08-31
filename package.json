@@ -2,7 +2,7 @@
   "name": "hexboard",
   "version": "0.0.1",
   "description": "A hexboard for visualizing Kubernetes pod status",
-  "repository": "https://github.com/bleathem/hexboard",
+  "repository": "https://github.com/keithresar/hexboard",
   "scripts": {
     "start": "node server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"

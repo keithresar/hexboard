@@ -283,7 +283,7 @@
                         "from": {
                             "kind": "ImageStreamTag",
                             "namespace": "openshift",
-                            "name": "${BUILDER_IMAGE}"
+                            "name": "nodejs:4"
                         }
                     }
                 },
