@@ -26,9 +26,64 @@ angular.module('starter.controllers', [])
     } catch (err) {
       items = {containers: []};
     }
-    $scope.containers = items.containers;
-  });
+    $scope.containers = items.containers; });
 })
+
+
+.controller('MainCtrl', function ($scope, $rootScope, $state, $http) {
+  $scope.submitPhoto = function (name) {
+
+    var filesSelected = document.getElementById("upload").files;
+    if (filesSelected.length > 0)  {
+        var fileToLoad = filesSelected[0];
+        var fileReader = new FileReader();
+
+        fileReader.onload = function(fileLoadedEvent)  {
+            //var textAreaFileContents = document.getElementById("textAreaFileContents");
+            //textAreaFileContents.innerHTML = fileLoadedEvent.target.result;
+            console.log(fileLoadedEvent.target.result)
+        };
+    
+        fileReader.readAsDataURL(fileToLoad);
+    }
+
+    return();
+
+    // Submit to container then on success go to the List Page
+    $http({
+      method: 'POST'
+    , url: '/api/sketch/1?name=' + $rootScope.name
+    , headers: {'Content-Type': 'image/png'}
+    , transformRequest: angular.identity
+    , data: canvas.toDataURL()
+    }).success(function (data) {
+      console.log('success. data:', data);
+      // Need the container link
+      var items = localStorage.getItem('keynote2015-mobile-app');
+
+      if (!items) {
+        items = {containers: []};
+      }
+
+      try {
+        items = JSON.parse(items);
+      } catch (err) {
+        items = {containers: []};
+      }
+
+      items.containers.push({
+        img: canvas.toDataURL()
+      , sketch: data
+      });
+
+      items = JSON.stringify(items);
+
+      // Save to the local storage
+      localStorage.setItem('keynote2015-mobile-app', items);
+      $state.go('list');
+    });
+  };
+});
 
 .controller('DrawCtrl', function ($scope, $rootScope, $state, $http) {
   $scope.$on('$ionicView.enter', function(e) {
