@@ -30,6 +30,7 @@ angular.module('starter.controllers', [])
 })
 
 
+/*
 .controller('MainCtrl', function ($scope, $rootScope, $state, $http) {
   $scope.submitPhoto = function (name) {
 
@@ -84,6 +85,8 @@ angular.module('starter.controllers', [])
     });
   };
 });
+*/
+
 
 .controller('DrawCtrl', function ($scope, $rootScope, $state, $http) {
   $scope.$on('$ionicView.enter', function(e) {
