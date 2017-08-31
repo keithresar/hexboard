@@ -57,9 +57,9 @@
             "kind": "ImageStream",
             "apiVersion": "v1",
             "metadata": {
-                "name": "sketchpod",
+                "name": "imagepod",
                 "labels": {
-                    "servicegroup": "sketchpod"
+                    "servicegroup": "imagepod"
                 },
                 "creationTimestamp": null
             },
@@ -72,9 +72,9 @@
             "kind": "BuildConfig",
             "apiVersion": "v1",
             "metadata": {
-                "name": "sketchpod",
+                "name": "imagepod",
                 "labels": {
-                    "servicegroup": "sketchpod"
+                    "servicegroup": "imagepod"
                 },
                 "creationTimestamp": null
             },
@@ -100,7 +100,7 @@
                 "source": {
                     "type": "Git",
                     "git": {
-                        "uri": "http://github.com/keithresar/sketchpod"
+                        "uri": "http://github.com/keithresar/imagepod"
                     }
                 },
                 "strategy": {
@@ -116,7 +116,7 @@
                 "output": {
                     "to": {
                         "kind": "ImageStreamTag",
-                        "name": "sketchpod:latest"
+                        "name": "imagepod:latest"
                     }
                 },
                 "resources": {}
@@ -129,9 +129,9 @@
             "kind": "DeploymentConfig",
             "apiVersion": "v1",
             "metadata": {
-                "name": "sketchpod",
+                "name": "imagepod",
                 "labels": {
-                    "servicegroup": "sketchpod"
+                    "servicegroup": "imagepod"
                 },
                 "creationTimestamp": null
             },
@@ -149,31 +149,31 @@
                         "imageChangeParams": {
                             "automatic": true,
                             "containerNames": [
-                                "sketchpod"
+                                "imagepod"
                             ],
                             "from": {
                                 "kind": "ImageStreamTag",
-                                "name": "sketchpod:latest"
+                                "name": "imagepod:latest"
                             }
                         }
                     }
                 ],
                 "replicas": 1,
                 "selector": {
-                    "deploymentconfig": "sketchpod"
+                    "deploymentconfig": "imagepod"
                 },
                 "template": {
                     "metadata": {
                         "creationTimestamp": null,
                         "labels": {
-                            "deploymentconfig": "sketchpod"
+                            "deploymentconfig": "imagepod"
                         }
                     },
                     "spec": {
                         "containers": [
                             {
-                                "name": "sketchpod",
-                                "image": "sketchpod:latest",
+                                "name": "imagepod",
+                                "image": "imagepod:latest",
                                 "livenessProbe": {
                                     "httpGet": {
                                         "path": "/status",
@@ -184,7 +184,7 @@
                                 },
                                 "ports": [
                                     {
-                                        "name": "sketchpodtcp",
+                                        "name": "imagepodtcp",
                                         "containerPort": 8080,
                                         "protocol": "TCP"
                                     }
@@ -209,16 +209,16 @@
             "kind": "Service",
             "apiVersion": "v1",
             "metadata": {
-                "name": "sketchpod",
+                "name": "imagepod",
                 "labels": {
-                    "servicegroup": "sketchpod"
+                    "servicegroup": "imagepod"
                 },
                 "creationTimestamp": null
             },
             "spec": {
                 "ports": [
                     {
-                        "name": "sketchpodtcp",
+                        "name": "imagepodtcp",
                         "protocol": "TCP",
                         "port": 8080,
                         "targetPort": 8080,
@@ -226,7 +226,7 @@
                     }
                 ],
                 "selector": {
-                    "deploymentconfig": "sketchpod"
+                    "deploymentconfig": "imagepod"
                 },
                 "portalIP": "",
                 "type": "ClusterIP"

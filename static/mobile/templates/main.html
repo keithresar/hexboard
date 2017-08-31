@@ -7,11 +7,16 @@
       <ion-content>
 
         <div class="container">
-          <p>Register by simple giving us your name:</p>
           <form name='userForm' ng-submit="goToDraw(name)" novalidate>
 
+          <p>Register by simple giving us your name:</p>
           <label class="item item-input">
             <input type="text" id="name" name="name" placeholder="Name" ng-model="name" value="root.name" required>
+          </label>
+
+          <p>Upload a photo (selfie or otherwise):</p>
+          <label class="item item-input">
+            <input type="file" name="upload" id="upload" required>
           </label>
 
           <button type="submit" class="button button-block button-positive" ng-disabled="userForm.$invalid">
