@@ -18,7 +18,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ImageCtrl', function($scope, $rootScope, $state) {
+.controller('ImageCtrl', function($scope, $rootScope, $state, $http) {
 
   $scope.submitPhoto = function (name) {
 
@@ -30,47 +30,47 @@ angular.module('starter.controllers', [])
         fileReader.onload = function(fileLoadedEvent)  {
             //var textAreaFileContents = document.getElementById("textAreaFileContents");
             //textAreaFileContents.innerHTML = fileLoadedEvent.target.result;
-            console.log(fileLoadedEvent.target.result)
+            //console.log(fileLoadedEvent.target.result)
+
+		    // Submit to container then on success go to the List Page
+		    $http({
+		      method: 'POST'
+		    , url: '/api/sketch/1?name=' + $rootScope.name
+		    , headers: {'Content-Type': 'image/png'}
+		    , transformRequest: angular.identity
+		    , data: fileLoadedEvent.target.result
+		    }).success(function (data) {
+		      console.log('success. data:', data);
+		      // Need the container link
+		      var items = localStorage.getItem('keynote2015-mobile-app');
+		
+		      if (!items) {
+		        items = {containers: []};
+		      }
+		
+		      try {
+		        items = JSON.parse(items);
+		      } catch (err) {
+		        items = {containers: []};
+		      }
+		
+		      items.containers.push({
+		        img: fileLoadedEvent.target.result, 
+                sketch: data
+		      });
+		
+		      items = JSON.stringify(items);
+		
+		      // Save to the local storage
+		      localStorage.setItem('keynote2015-mobile-app', items);
+		      $state.go('list');
+		    });
         };
     
         fileReader.readAsDataURL(fileToLoad);
     }
 
-    return();
 
-    // Submit to container then on success go to the List Page
-    $http({
-      method: 'POST'
-    , url: '/api/sketch/1?name=' + $rootScope.name
-    , headers: {'Content-Type': 'image/png'}
-    , transformRequest: angular.identity
-    , data: canvas.toDataURL()
-    }).success(function (data) {
-      console.log('success. data:', data);
-      // Need the container link
-      var items = localStorage.getItem('keynote2015-mobile-app');
-
-      if (!items) {
-        items = {containers: []};
-      }
-
-      try {
-        items = JSON.parse(items);
-      } catch (err) {
-        items = {containers: []};
-      }
-
-      items.containers.push({
-        img: canvas.toDataURL()
-      , sketch: data
-      });
-
-      items = JSON.stringify(items);
-
-      // Save to the local storage
-      localStorage.setItem('keynote2015-mobile-app', items);
-      $state.go('list');
-    });
   };
 })
 
@@ -85,13 +85,6 @@ angular.module('starter.controllers', [])
     }
     $scope.containers = items.containers; });
 })
-
-
-/*
-.controller('MainCtrl', function ($scope, $rootScope, $state, $http) {
-  };
-});
-*/
 
 
 .controller('DrawCtrl', function ($scope, $rootScope, $state, $http) {

@@ -21,10 +21,10 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       templateUrl: 'templates/sketch.html',
       controller: 'SketchCtrl'
     })
-    .state('photo', {
-      url: '/photo',
-      templateUrl: 'templates/photo.html',
-      controller: 'PhotoCtrl'
+    .state('image', {
+      url: '/image',
+      templateUrl: 'templates/image.html',
+      controller: 'ImageCtrl'
     })
     .state('draw', {
       url: '/draw',
