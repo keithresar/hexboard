@@ -107,7 +107,7 @@ hex.winner = (function dataSimulator(d3, Rx) {
     winnerSpots = d3.range(numWinners).map(function(spot, index) {
       var c = {x: hex.board.hexboard.content.x / 2, y: hex.board.hexboard.content.y / 2}
         , delta = {x: hex.board.hexboard.honeycomb.dimensions.x/4, y: hex.board.hexboard.honeycomb.dimensions.y/3.5}
-        , offset = {x: 0, y: 0}  // an adjustment to make room for the names
+        , offset = {x: -50, y: 0}  // an adjustment to make room for the names
 
       if (index <= 2) {
         return {
@@ -179,9 +179,6 @@ hex.winner = (function dataSimulator(d3, Rx) {
   var animateWinner = function(p, p0, p1, zoom1, zoom2, shownames, cb) {
     var duration = 1000;
     var sketch = p.sketch[p.sketch.length - 1];
-    var spaceIndex = sketch.name.indexOf(' ');
-    //sketch.firstname = sketch.name.substring(0,spaceIndex);
-    //sketch.lastname = sketch.name.substring(spaceIndex+1);
     var sketchId = hex.board.createSketchId(p);
 
     if (!p.group) {
