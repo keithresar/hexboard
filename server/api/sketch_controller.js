@@ -12,7 +12,8 @@ var fs = require('fs')
   , sketcher = require('../hexboard/sketch')
   , base64 = require('base64-stream')
   , through = require('through2')
-  , uuid = require('uuid-js');
+  , uuid = require('uuid-js')
+  , jimp = require('jimp')
   ;
 
 var tag = 'API/THOUSAND';
