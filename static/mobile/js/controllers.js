@@ -36,7 +36,7 @@ angular.module('starter.controllers', [])
 		    $http({
 		      method: 'POST'
 		    , url: '/api/sketch/1?name=' + $rootScope.name
-		    , headers: {'Content-Type': 'image/png'}
+		    , headers: {'Content-Type': 'image/jpeg'}
 		    , transformRequest: angular.identity
 		    , data: fileLoadedEvent.target.result
 		    }).success(function (data) {
@@ -108,7 +108,7 @@ angular.module('starter.controllers', [])
       $http({
         method: 'POST'
       , url: '/api/sketch/1?name=' + $rootScope.name
-      , headers: {'Content-Type': 'image/jpeg'}
+      , headers: {'Content-Type': 'image/png'}
       , transformRequest: angular.identity
       , data: canvas.toDataURL()
       }).success(function (data) {
