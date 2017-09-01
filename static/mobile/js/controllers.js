@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('MainCtrl', function($scope, $rootScope, $state) {
+.controller('SketchCtrl', function($scope, $rootScope, $state) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -18,20 +18,8 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ListCtrl', function($scope) {
-  $scope.$on('$ionicView.enter', function(e) {
-    var items = localStorage.getItem('keynote2015-mobile-app');
-    try {
-      items = JSON.parse(items);
-    } catch (err) {
-      items = {containers: []};
-    }
-    $scope.containers = items.containers; });
-})
+.controller('ImageCtrl', function($scope, $rootScope, $state) {
 
-
-/*
-.controller('MainCtrl', function ($scope, $rootScope, $state, $http) {
   $scope.submitPhoto = function (name) {
 
     var filesSelected = document.getElementById("upload").files;
@@ -83,6 +71,24 @@ angular.module('starter.controllers', [])
       localStorage.setItem('keynote2015-mobile-app', items);
       $state.go('list');
     });
+  };
+})
+
+
+.controller('ListCtrl', function($scope) {
+  $scope.$on('$ionicView.enter', function(e) {
+    var items = localStorage.getItem('keynote2015-mobile-app');
+    try {
+      items = JSON.parse(items);
+    } catch (err) {
+      items = {containers: []};
+    }
+    $scope.containers = items.containers; });
+})
+
+
+/*
+.controller('MainCtrl', function ($scope, $rootScope, $state, $http) {
   };
 });
 */
