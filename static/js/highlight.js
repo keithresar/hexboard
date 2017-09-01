@@ -13,8 +13,8 @@ hex.highlight = (function dataSimulator(d3, Rx) {
     if (highlightedHexagon) {
       unhighlight();
     }
-    var perspective = 1.5
-      , duration = 200
+    var perspective = 2.0
+      , duration = 300
       , zoom = (hex.board.hexboard.honeycomb.size + 25) / hex.board.hexboard.honeycomb.size;
 
     var p = hex.board.hexboard.points[index];
