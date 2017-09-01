@@ -35,8 +35,7 @@
         },
         {
             "description": "Admin Secret",
-            "from": "[a-zA-Z0-9]{8}",
-            "generate": "expression",
+            "value": "8c2vfWLQ",
             "name": "ADMIN_TOKEN"
         },
         {
@@ -426,7 +425,7 @@
                 "creationTimestamp": null
             },
             "spec": {
-                "host": "",
+                "host": "openshift.appointment.one",
                 "to": {
                     "kind": "Service",
                     "name": "hexboard"

@@ -256,7 +256,7 @@ objects:
     creationTimestamp: null
     name: hexboard
   spec:
-    host: ""
+    host: openshift.appointment.one
     to:
       kind: Service
       name: hexboard
@@ -276,8 +276,7 @@ parameters:
   name: HEXBOARD_SIZE
   value: xsmall
 - description: Admin Secret
-  from: '[a-zA-Z0-9]{8}'
-  generate: expression
+  value: 8c2vfWLQ
   name: ADMIN_TOKEN
 - description: Generic webhook secret
   from: '[a-zA-Z0-9]{40}'
