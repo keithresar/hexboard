@@ -48,6 +48,9 @@ var saveImageToFile = function(sketch, req) {
     });
     var stream = req.pipe(fs.createWriteStream(os.tmpdir() + '/' + filename));
   });
+  /*
+  jimp.read(
+  */
 };
 
 var sketchPostAgent = new http.Agent({
@@ -127,11 +130,16 @@ var parseSketchStream = function(req) {
     .pipe(through(function (chunk, enc, callback) {
       if (!passthrough) {
         accumulation += chunk;
-        var test = 'image/png;base64,';
-        var index = accumulation.indexOf(test);
-        if (index > - 1) {
+        var test_png = 'image/png;base64,';
+        var test_jpg = 'image/png;base64,';
+        var index_png = accumulation.indexOf(test_png);
+        var index_jpg = accumulation.indexOf(test_jpg);
+        if (index_png > - 1) {
           passthrough = true;
-          chunk = accumulation.substr(index + test.length);
+          chunk = accumulation.substr(index_png + test_png.length);
+        }  else if (index_jpg > -1)  {
+          passthrough = true;
+          chunk = accumulation.substr(index_jpg + test_jpg.length);
         }
       }
       if (passthrough) {
