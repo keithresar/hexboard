@@ -35,7 +35,7 @@ angular.module('starter.controllers', [])
 		    // Submit to container then on success go to the List Page
 		    $http({
 		      method: 'POST'
-		    , url: '/api/sketch/1?name=' + $rootScope.name
+		    , url: '/api/sketch/1?name=' + document.getElementById("name").innerHTML
 		    , headers: {'Content-Type': 'image/jpeg'}
 		    , transformRequest: angular.identity
 		    , data: fileLoadedEvent.target.result

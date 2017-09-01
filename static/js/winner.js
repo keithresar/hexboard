@@ -180,8 +180,8 @@ hex.winner = (function dataSimulator(d3, Rx) {
     var duration = 1000;
     var sketch = p.sketch[p.sketch.length - 1];
     var spaceIndex = sketch.name.indexOf(' ');
-    sketch.firstname = sketch.name.substring(0,spaceIndex);
-    sketch.lastname = sketch.name.substring(spaceIndex+1);
+    //sketch.firstname = sketch.name.substring(0,spaceIndex);
+    //sketch.lastname = sketch.name.substring(spaceIndex+1);
     var sketchId = hex.board.createSketchId(p);
 
     if (!p.group) {
@@ -217,7 +217,8 @@ hex.winner = (function dataSimulator(d3, Rx) {
       textGroup.insert('text')
         .attr('class', 'firstname')
         .attr('text-anchor', 'middle')
-        .text("John");
+        .text(sketch.name);
+        //.text("John");
         //.text(sketch.firstname);
 
       /*
