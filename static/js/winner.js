@@ -204,7 +204,6 @@ hex.winner = (function dataSimulator(d3, Rx) {
         .attr('transform', 'matrix('+1/zoom1+', 0, 0, '+1/zoom1+', 50, 0)')
         //.attr('transform', 'matrix('+1/zoom1+', 0, 0, '+1/zoom1+', 0, '+ hex.board.hexboard.honeycomb.size/zoom1 * 1.5 +')')
       
-      /*
       textGroup.insert('rect')
         .attr('width', textWidth)
         .attr('height', textHeight)
@@ -212,23 +211,12 @@ hex.winner = (function dataSimulator(d3, Rx) {
         .attr('y', -hex.board.hexboard.honeycomb.size / 2.2)
         .attr('rx', 3)
         .attr('ry', 3);
-     */
 
       textGroup.insert('text')
         .attr('class', 'firstname')
         .attr('text-anchor', 'middle')
         .text(sketch.name);
-        //.text("John");
-        //.text(sketch.firstname);
 
-      /*
-      textGroup.insert('text')
-        .attr('class', 'lastname')
-        .attr('text-anchor', 'middle')
-        .attr('y', hex.board.hexboard.honeycomb.size / 1.5)
-        .text("Smith");
-        //.text(sketch.lastname);
-      */
     }
 
     p.group.transition()
