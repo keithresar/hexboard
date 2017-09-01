@@ -34,7 +34,7 @@ var saveIndexFile = function(sketch) {
 }
 
 var saveImageToFile = function(sketch, req) {
-  var filename = 'thousand-sketch' + sketch.containerId + '.png';
+  var filename = 'thousand-sketch' + sketch.containerId + '.jpg';
   console.log(tag, 'Saving sketch to file:', filename);
   return Rx.Observable.create(function(observer) {
     req.on('end', function() {
