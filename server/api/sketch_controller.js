@@ -135,11 +135,15 @@ var parseSketchStream = function(req) {
         var index_png = accumulation.indexOf(test_png);
         var index_jpg = accumulation.indexOf(test_jpg);
         if (index_png > - 1) {
+          console.log("png processed");
           passthrough = true;
           chunk = accumulation.substr(index_png + test_png.length);
         }  else if (index_jpg > -1)  {
+          console.log("jpeg processed");
           passthrough = true;
           chunk = accumulation.substr(index_jpg + test_jpg.length);
+        }  else  {
+          console.log("nothing processed");
         }
       }
       if (passthrough) {
