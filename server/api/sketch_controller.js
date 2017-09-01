@@ -131,7 +131,7 @@ var parseSketchStream = function(req) {
       if (!passthrough) {
         accumulation += chunk;
         var test_png = 'image/png;base64,';
-        var test_jpg = 'image/png;base64,';
+        var test_jpg = 'image/jpeg;base64,';
         var index_png = accumulation.indexOf(test_png);
         var index_jpg = accumulation.indexOf(test_jpg);
         if (index_png > - 1) {
