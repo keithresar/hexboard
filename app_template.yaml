@@ -1,0 +1,291 @@
+apiVersion: v1
+kind: Template
+metadata:
+  annotations:
+    description: Hexboard Demo
+    iconClass: icon-nodejs
+    name: hexboard
+    tags: instant-app,nodejs
+  creationTimestamp: null
+  name: hexboard
+
+objects:
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    creationTimestamp: null
+    labels:
+      servicegroup: imagepod
+    name: imagepod
+  spec: {}
+  status:
+    dockerImageRepository: ""
+
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    creationTimestamp: null
+    labels:
+      servicegroup: imagepod
+    name: imagepod
+  spec:
+    output:
+      to:
+        kind: ImageStreamTag
+        name: imagepod:latest
+    resources: {}
+    source:
+      git:
+        uri: http://github.com/keithresar/imagepod
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: ${BUILDER_IMAGE}
+          namespace: openshift
+      type: Source
+    triggers:
+    - github:
+        secret: ${GITHUB_WEBHOOK_SECRET}
+      type: GitHub
+    - generic:
+        secret: ${GENERIC_WEBHOOK_SECRET}
+      type: Generic
+    - imageChange: {}
+      type: ImageChange
+  status:
+    lastVersion: 0
+
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    creationTimestamp: null
+    labels:
+      servicegroup: imagepod
+    name: imagepod
+  spec:
+    replicas: 1
+    selector:
+      deploymentconfig: imagepod
+    strategy:
+      resources: {}
+      type: Recreate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          deploymentconfig: imagepod
+      spec:
+        containers:
+        - image: imagepod:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /status
+              port: 8080
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+          name: imagepod
+          ports:
+          - containerPort: 8080
+            name: imagepodtcp
+            protocol: TCP
+          resources: {}
+          securityContext:
+            capabilities: {}
+            privileged: false
+          terminationMessagePath: /dev/termination-log
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - imagepod
+        from:
+          kind: ImageStreamTag
+          name: imagepod:latest
+      type: ImageChange
+  status: {}
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: null
+    labels:
+      servicegroup: imagepod
+    name: imagepod
+  spec:
+    portalIP: ""
+    ports:
+    - name: imagepodtcp
+      nodePort: 0
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      deploymentconfig: imagepod
+    type: ClusterIP
+
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    creationTimestamp: null
+    name: hexboard
+  spec: {}
+  status:
+    dockerImageRepository: ""
+
+- apiVersion: v1
+  kind: BuildConfig
+  metadata:
+    creationTimestamp: null
+    name: hexboard
+  spec:
+    output:
+      to:
+        kind: ImageStreamTag
+        name: hexboard:latest
+    resources: {}
+    source:
+      git:
+        ref: master
+        uri: http://github.com/keithresar/hexboard
+      type: Git
+    strategy:
+      sourceStrategy:
+        from:
+          kind: ImageStreamTag
+          name: nodejs:4
+          namespace: openshift
+      type: Source
+    triggers:
+    - github:
+        secret: ${GITHUB_WEBHOOK_SECRET}
+      type: GitHub
+    - generic:
+        secret: ${GENERIC_WEBHOOK_SECRET}
+      type: Generic
+    - imageChange: {}
+      type: ImageChange
+  status:
+    lastVersion: 0
+
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    creationTimestamp: null
+    name: hexboard
+  spec:
+    replicas: 1
+    selector:
+      deploymentconfig: hexboard
+    strategy:
+      resources: {}
+      type: Recreate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          deploymentconfig: hexboard
+      spec:
+        containers:
+        - env:
+          - name: HEXBOARD_SIZE
+            value: ${HEXBOARD_SIZE}
+          - name: WINNER_COUNT
+            value: ${WINNER_COUNT}
+          - name: ADMIN_TOKEN
+            value: ${ADMIN_TOKEN}
+          - name: ACCESS_TOKEN
+            value: ${ACCESS_TOKEN}
+          image: hexboard:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /status
+              port: 8080
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+          name: hexboard
+          ports:
+          - containerPort: 8080
+            name: hexboardtcp
+            protocol: TCP
+          resources: {}
+          securityContext:
+            capabilities: {}
+            privileged: false
+          terminationMessagePath: /dev/termination-log
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - hexboard
+        from:
+          kind: ImageStreamTag
+          name: hexboard:latest
+      type: ImageChange
+  status: {}
+
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: null
+    name: hexboard
+  spec:
+    portalIP: ""
+    ports:
+    - name: hexboardtcp
+      nodePort: 0
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      deploymentconfig: hexboard
+    type: ClusterIP
+
+- apiVersion: v1
+  kind: Route
+  metadata:
+    creationTimestamp: null
+    name: hexboard
+  spec:
+    host: ""
+    to:
+      kind: Service
+      name: hexboard
+  status: {}
+
+parameters:
+- description: OpenShift OAuth token (REQUIRED)
+  name: ACCESS_TOKEN
+  value: Missing!
+- description: builder image
+  name: BUILDER_IMAGE
+  value: nodejs:4
+- description: Number of winners
+  name: WINNER_COUNT
+  value: "10"
+- description: The total number of hexagons (containers) to display in the UI
+  name: HEXBOARD_SIZE
+  value: xsmall
+- description: Admin Secret
+  from: '[a-zA-Z0-9]{8}'
+  generate: expression
+  name: ADMIN_TOKEN
+- description: Generic webhook secret
+  from: '[a-zA-Z0-9]{40}'
+  generate: expression
+  name: GENERIC_WEBHOOK_SECRET
+- description: GitHub webhook secret
+  from: '[a-zA-Z0-9]{40}'
+  generate: expression
+  name: GITHUB_WEBHOOK_SECRET
+
+
