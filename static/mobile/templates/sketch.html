@@ -1,0 +1,30 @@
+    <ion-pane>
+      <ion-header-bar class="bar-header bar-assertive">
+        <a href="#/" class="button button-icon icon ion-ios-arrow-thin-left"></a>
+        <div class="h1 title">Enter your name</div>
+      </ion-header-bar>
+
+      <ion-content>
+
+        <div class="container">
+          <form name='userForm' ng-submit="goToDraw(name)" novalidate>
+
+          <p>Register by simple giving us your name:</p>
+          <label class="item item-input">
+            <input type="text" id="name" name="name" placeholder="Name" ng-model="name" value="root.name" required>
+          </label>
+
+          <!--
+          <p>Upload a photo (selfie or otherwise):</p>
+          <label class="item item-input">
+             <input type="file" accept="image/*" name="upload" id="upload" capture="camera" required>
+          </label>
+          -->
+
+          <button type="submit" class="button button-block button-positive" ng-disabled="userForm.$invalid">
+            Continue to Draw
+          </button>
+          </form>
+        </div>
+      </ion-content>
+    </ion-pane>

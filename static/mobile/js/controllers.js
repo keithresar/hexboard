@@ -139,5 +139,6 @@ angular.module('starter.controllers', [])
         $state.go('list');
       });
     };
+
   });
 });

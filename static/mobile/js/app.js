@@ -16,10 +16,15 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       url: '/',
       templateUrl: 'templates/start.html'
     })
-    .state('main', {
-      url: '/main',
-      templateUrl: 'templates/main.html',
-      controller: 'MainCtrl'
+    .state('sketch', {
+      url: '/sketch',
+      templateUrl: 'templates/sketch.html',
+      controller: 'SketchCtrl'
+    })
+    .state('photo', {
+      url: '/photo',
+      templateUrl: 'templates/photo.html',
+      controller: 'PhotoCtrl'
     })
     .state('draw', {
       url: '/draw',
