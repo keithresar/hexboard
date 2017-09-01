@@ -196,7 +196,7 @@ hex.winner = (function dataSimulator(d3, Rx) {
         .attr('transform', 'matrix('+zoom1+', 0, 0, '+zoom1+', 0, 0)');
     }
 
-    if (shownames) {
+    if (true || shownames) {
       var textWidth = hex.board.hexboard.honeycomb.size * 3.5
         , textHeight = hex.board.hexboard.honeycomb.size * 1.3;
       var textGroup = p.group.insert('g')
@@ -213,13 +213,15 @@ hex.winner = (function dataSimulator(d3, Rx) {
       textGroup.insert('text')
         .attr('class', 'firstname')
         .attr('text-anchor', 'middle')
-        .text(sketch.firstname);
+        .text("John");
+        //.text(sketch.firstname);
 
       textGroup.insert('text')
         .attr('class', 'lastname')
         .attr('text-anchor', 'middle')
         .attr('y', hex.board.hexboard.honeycomb.size / 1.5)
-        .text(sketch.lastname);
+        .text("Smith");
+        //.text(sketch.lastname);
     }
 
     p.group.transition()
