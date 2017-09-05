@@ -9,6 +9,7 @@ metadata:
   creationTimestamp: null
   name: hexboard
 
+objects:
 - apiVersion: v1
   kind: ImageStream
   metadata:
