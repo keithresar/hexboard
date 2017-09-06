@@ -152,7 +152,7 @@ parameters:
   value: nodejs:4
 - description: Number of winners
   name: WINNER_COUNT
-  value: "10"
+  value: "3"
 - description: The total number of hexagons (containers) to display in the UI
   name: HEXBOARD_SIZE
   value: xsmall
